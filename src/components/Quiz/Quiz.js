@@ -7,43 +7,38 @@ class Quiz extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      canSubmit: false,
+    this.initialState = {
       selectedAnswer: null,
+      canSubmit: false,
+      submitted: false,
+      hasSuccess: false,
     };
 
+    this.state = this.initialState;
+
     this.setAnswer = this.setAnswer.bind(this);
-    this.checkAnswer = this.checkAnswer.bind(this);
-    this.renderOptions = this.renderOptions.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.resetQuiz = this.resetQuiz.bind(this);
+    this.renderOptions = this.renderOptions.bind(this);
   }
 
   setAnswer(option) {
     this.setState({
       selectedAnswer: option,
       canSubmit: true,
-    }, () => {
-      console.log(this.state);
     });
   }
 
-  checkAnswer() {
-    if (this.state.selectedAnswer.isCorrect) {
-      console.log('Correct!');
-    } else {
-      console.log('NOPE');
-    }
-
+  handleSubmit() {
     this.setState({
       canSubmit: false,
+      submitted: true,
+      hasSuccess: this.state.selectedAnswer.isCorrect,
     });
   }
 
   resetQuiz() {
-    this.setState({
-      selectedAnswer: null,
-      canSubmit: false,
-    });
+    this.setState(this.initialState);
   }
 
   /**
@@ -53,11 +48,12 @@ class Quiz extends Component {
     return this.props.block.options.map(option => (
       <li key={option.key}>
         <label htmlFor={`option${option.key}`}>
-          <input 
+          <input
             type="radio"
             id={`option${option.key}`}
-            name="option"
+            name={`quiz-${this.props.block.id}-option`}
             checked={this.state.selectedAnswer === option}
+            disabled={this.state.submitted}
             onClick={() => this.setAnswer(option)}
           />
           <span>{option.label}</span>
@@ -79,12 +75,20 @@ class Quiz extends Component {
           <img src={process.env.PUBLIC_URL + img} alt={question} />
         }
         <p>{question}</p>
+        {
+          this.state.submitted && this.state.hasSuccess &&
+          <h4>That is correct!</h4>
+        }
+        {
+          this.state.submitted && !this.state.hasSuccess &&
+          <h4>That is NOT correct!</h4>
+        }
         <ul className="options">
           {this.renderOptions()}
         </ul>
         <button 
           disabled={!this.state.canSubmit}
-          onClick={this.checkAnswer}
+          onClick={this.handleSubmit}
         >
           Submit
         </button>

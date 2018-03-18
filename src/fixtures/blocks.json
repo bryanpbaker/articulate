@@ -17,5 +17,24 @@
         "key": 2
       }
     ]
+  },
+  {
+    "id": 2,
+    "title": "Do you know?",
+    "type": "quiz",
+    "img": "https://img.buzzfeed.com/buzzfeed-static/static/2016-01/7/11/enhanced/webdr03/enhanced-buzz-32618-1452185446-0.jpg",
+    "question": "Is this red?",
+    "options": [
+      {
+        "isCorrect": true,
+        "label": "Yes",
+        "key": 1
+      },
+      {
+        "isCorrect": false,
+        "label": "No",
+        "key": 2
+      }
+    ]
   }
 ]
