@@ -36,5 +36,34 @@
         "key": 2
       }
     ]
+  },
+  {
+    "id": 3,
+    "title": "What do you think?",
+    "type": "quiz",
+    "img": null,
+    "question": "What color is the sky?",
+    "options": [
+      {
+        "isCorrect": false,
+        "label": "Green",
+        "key": 1
+      },
+      {
+        "isCorrect": false,
+        "label": "Orange",
+        "key": 2
+      },
+      {
+        "isCorrect": true,
+        "label": "Blue",
+        "key": 3
+      },
+      {
+        "isCorrect": false,
+        "label": "Purple",
+        "key": 4
+      }
+    ]
   }
 ]
