@@ -1,28 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import fetchBlocks from './actions/blocks';
-
+import 'normalize.css';
 import './App.css';
 
-import Quiz from './components/Quiz/Quiz';
+import fetchBlocks from './actions/blocks';
+
+import Block from './components/Block/Block';
 
 class App extends Component {
   componentDidMount() {
-    this.props.fetchBlocks();
+    setTimeout(() => {
+      this.props.fetchBlocks();
+    }, 200);
   }
 
   /**
-   * render ui for each block based on type
+   * render a block component for each block on state
    */
-  renderBlockItems() {
-    return this.props.blocks.map((block) => {
-      if (block.type === 'quiz') {
-        return (
-          <Quiz key={block.id} block={block} />
-        );
-      }
-    });
+  renderBlocks() {
+    return this.props.blocks.map(block => (
+      <Block key={block.id} block={block} />
+    ));
   }
 
   render() {
@@ -32,7 +31,7 @@ class App extends Component {
 
     return (
       <div className="lesson">
-        {this.renderBlockItems()}
+        {this.renderBlocks()}
       </div>
     );
   }

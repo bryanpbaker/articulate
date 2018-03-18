@@ -1,0 +1,23 @@
+.Block {
+  background: #eee;
+  padding-bottom: 30px;
+  padding-top: 30px;
+}
+
+.BlockContainer {
+  padding-left: 5vw;
+  padding-right: 5vw;
+}
+
+@media (min-width: 62em) {
+  .Block {
+    padding: 3rem;
+  }
+
+  .BlockContainer {
+    max-width: 47.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+  }
+}

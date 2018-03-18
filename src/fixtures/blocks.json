@@ -1,26 +1,9 @@
 [
   {
     "id": 1,
+    "title": "Let's Check Your Knowledge!",
     "type": "quiz",
-    "img": null,
-    "question": "What is 2 + 2?",
-    "options": [
-      {
-        "isCorrect": true,
-        "label": 4,
-        "key": 1
-      },
-      {
-        "isCorrect": false,
-        "label": 6,
-        "key": 2
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "type": "quiz",
-    "img": null,
+    "img": "/images/cookies-coffee.gif",
     "question": "Is this a picture of a cat?",
     "options": [
       {
