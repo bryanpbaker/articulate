@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Block.css';
 
 import Quiz from '../Quiz/Quiz';
@@ -10,7 +11,7 @@ const Block = ({ block }) => {
         <Quiz key={block.id} block={block} />
       );
     }
-  }
+  };
 
   return (
     <div className="Block">
@@ -19,6 +20,24 @@ const Block = ({ block }) => {
       </div>
     </div>
   );
+};
+
+Block.propTypes = {
+  block: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    type: PropTypes.string,
+    img: PropTypes.string,
+    question: PropTypes.string,
+    options: PropTypes.arrayOf(PropTypes.shape({
+      isCorrect: PropTypes.bool,
+      label: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string,
+      ]),
+      id: PropTypes.number,
+    })),
+  }).isRequired,
 };
 
 export default Block;

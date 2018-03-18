@@ -23,7 +23,7 @@ class Quiz extends Component {
       selectedAnswer: option,
       canSubmit: true,
     }, () => {
-      console.log(this.state)
+      console.log(this.state);
     });
   }
 
