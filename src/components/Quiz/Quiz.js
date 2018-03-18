@@ -39,6 +39,13 @@ class Quiz extends Component {
     });
   }
 
+  resetQuiz() {
+    this.setState({
+      selectedAnswer: null,
+      canSubmit: false,
+    });
+  }
+
   /**
    * render an option for each available option on props
    */
@@ -57,13 +64,6 @@ class Quiz extends Component {
         </label>
       </li>
     ));
-  }
-
-  resetQuiz() {
-    this.setState({
-      selectedAnswer: null,
-      canSubmit: false,
-    });
   }
 
   render() {
