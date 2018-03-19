@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import FontAwesome from 'react-fontawesome';
 
 import './Quiz.css';
 
@@ -46,9 +47,9 @@ class Quiz extends Component {
    */
   renderOptions() {
     return this.props.block.options.map(option => (
-      <li 
+      <li
         key={option.key}
-        className="Quiz__option"
+        className={`Quiz__option ${this.state.selectedAnswer === option ? 'selected' : ''} ${this.state.submitted ? 'submitted' : ''} ${this.state.submitted && option.isCorrect ? 'correct' : 'incorrect'}`}
       >
         <input
           type="radio"
@@ -59,7 +60,34 @@ class Quiz extends Component {
           onClick={() => this.setAnswer(option)}
         />
         <label htmlFor={`option${option.key}`}>
-          <span className="custom-radio" />
+          <span className="custom-radio">
+            {
+              !this.state.submitted &&
+              <span className="custom-radio-inner" />
+            }
+            {
+              this.state.submitted && this.state.hasSuccess && this.state.selectedAnswer === option &&
+              <FontAwesome
+                className="status-icon"
+                name="check"
+                style={{
+                  fontSize: '12px',
+                  color: '#707070',
+                }}
+              />
+            }
+            {
+              this.state.submitted && !this.state.hasSuccess && this.state.selectedAnswer === option &&
+              <FontAwesome
+                className="status-icon"
+                name="close"
+                style={{
+                  fontSize: '12px',
+                  color: '#707070',
+                }}
+              />
+            }
+          </span>
           <span>{option.label}</span>
         </label>
         <div className="underline" />
@@ -69,7 +97,7 @@ class Quiz extends Component {
 
   render() {
     const {
-      question, img,
+      question, img, caption,
     } = this.props.block;
 
     return (
@@ -79,31 +107,66 @@ class Quiz extends Component {
           img &&
           <img src={process.env.PUBLIC_URL + img} alt={question} />
         }
-        {
-          this.state.submitted && this.state.hasSuccess &&
-          <h4>That is correct!</h4>
-        }
-        {
-          this.state.submitted && !this.state.hasSuccess &&
-          <h4>That is NOT correct!</h4>
-        }
         <div className="Quiz__options">
           <ul>
             {this.renderOptions()}
           </ul>
         </div>
+        <div className="results">
+          {
+            this.state.submitted && this.state.hasSuccess &&
+            <div className="Quiz__success-message">
+              <div className="icon-container">
+                <FontAwesome
+                  name="check"
+                  style={{
+                    fontSize: '32px',
+                    color: '#707070',
+                  }}
+                />
+              </div>
+              <p>Correct</p>
+              <p className="caption">{caption}</p>
+            </div>
+          }
+          {
+            this.state.submitted && !this.state.hasSuccess &&
+            <div className="Quiz__success-message">
+              <div className="icon-container">
+                <FontAwesome
+                  name="close"
+                  style={{
+                    fontSize: '32px',
+                    color: '#707070',
+                  }}
+                />
+              </div>
+              <p>Incorrect</p>
+              <p className="caption">{caption}</p>
+            </div>
+          }
+        </div>
         <div>
-          <button
-            className="Quiz__submit"
-            disabled={!this.state.canSubmit}
-            onClick={this.handleSubmit}
-          >
-            Submit
-          </button>
+          {
+            !this.state.submitted &&
+            <button
+              className="Quiz__submit"
+              disabled={!this.state.canSubmit}
+              onClick={this.handleSubmit}
+            >
+              Submit
+            </button>
+          }
         </div>
         {
           this.state.submitted &&
-          <button onClick={this.resetQuiz}>Try again!</button>
+          <button className="try-again" onClick={this.resetQuiz}>
+            <FontAwesome
+              name="undo"
+            />
+            &nbsp;
+            Try again
+          </button>
         }
       </div>
     );
@@ -116,6 +179,7 @@ Quiz.propTypes = {
     type: PropTypes.string,
     img: PropTypes.string,
     question: PropTypes.string,
+    caption: PropTypes.string,
     options: PropTypes.arrayOf(PropTypes.shape({
       isCorrect: PropTypes.bool,
       label: PropTypes.oneOfType([

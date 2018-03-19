@@ -1,6 +1,10 @@
 :root {
   --serif-font: 'Merriweather', serif;
-  --sans-font: 'Lato', sans-serif;;
+  --sans-font: 'Lato', sans-serif;
+  --light-gray:#f7f7f8;
+  --light-gray-alt: #eaeaeb;
+  --med-gray: #cacbcb;
+  --dark-gray: #707070;
 }
 
 ul {

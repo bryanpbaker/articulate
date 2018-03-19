@@ -4,6 +4,7 @@
     "type": "quiz",
     "img": "/images/cookies-coffee.gif",
     "question": "Is this a picture of a cat?",
+    "caption": "This is definitely not a cat!",
     "options": [
       {
         "isCorrect": false,
