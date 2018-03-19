@@ -4,7 +4,7 @@
   padding-top: 30px;
 }
 
-.BlockContainer {
+.Block__container {
   padding-left: 5vw;
   padding-right: 5vw;
 }
@@ -14,7 +14,7 @@
     padding: 3rem;
   }
 
-  .BlockContainer {
+  .Block__container {
     max-width: 47.5rem;
     margin-left: auto;
     margin-right: auto;

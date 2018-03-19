@@ -15,7 +15,7 @@ const Block = ({ block }) => {
 
   return (
     <div className="Block">
-      <div className="BlockContainer">
+      <div className="Block__container">
         {renderBlock()}
       </div>
     </div>

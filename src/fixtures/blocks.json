@@ -1,7 +1,6 @@
 [
   {
     "id": 1,
-    "title": "Let's Check Your Knowledge!",
     "type": "quiz",
     "img": "/images/cookies-coffee.gif",
     "question": "Is this a picture of a cat?",
@@ -15,54 +14,6 @@
         "isCorrect": true,
         "label": "No",
         "key": 2
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "title": "Do you know?",
-    "type": "quiz",
-    "img": "https://img.buzzfeed.com/buzzfeed-static/static/2016-01/7/11/enhanced/webdr03/enhanced-buzz-32618-1452185446-0.jpg",
-    "question": "Is this red?",
-    "options": [
-      {
-        "isCorrect": true,
-        "label": "Yes",
-        "key": 1
-      },
-      {
-        "isCorrect": false,
-        "label": "No",
-        "key": 2
-      }
-    ]
-  },
-  {
-    "id": 3,
-    "title": "What do you think?",
-    "type": "quiz",
-    "img": null,
-    "question": "What color is the sky?",
-    "options": [
-      {
-        "isCorrect": false,
-        "label": "Green",
-        "key": 1
-      },
-      {
-        "isCorrect": false,
-        "label": "Orange",
-        "key": 2
-      },
-      {
-        "isCorrect": true,
-        "label": "Blue",
-        "key": 3
-      },
-      {
-        "isCorrect": false,
-        "label": "Purple",
-        "key": 4
       }
     ]
   }

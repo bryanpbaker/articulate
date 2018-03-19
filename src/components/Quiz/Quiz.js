@@ -46,35 +46,39 @@ class Quiz extends Component {
    */
   renderOptions() {
     return this.props.block.options.map(option => (
-      <li key={option.key}>
+      <li 
+        key={option.key}
+        className="Quiz__option"
+      >
+        <input
+          type="radio"
+          id={`option${option.key}`}
+          name={`quiz-${this.props.block.id}-option`}
+          checked={this.state.selectedAnswer === option}
+          disabled={this.state.submitted}
+          onClick={() => this.setAnswer(option)}
+        />
         <label htmlFor={`option${option.key}`}>
-          <input
-            type="radio"
-            id={`option${option.key}`}
-            name={`quiz-${this.props.block.id}-option`}
-            checked={this.state.selectedAnswer === option}
-            disabled={this.state.submitted}
-            onClick={() => this.setAnswer(option)}
-          />
+          <span className="custom-radio" />
           <span>{option.label}</span>
         </label>
+        <div className="underline" />
       </li>
     ));
   }
 
   render() {
     const {
-      title, question, img,
+      question, img,
     } = this.props.block;
 
     return (
       <div className="Quiz">
-        <h3>{title}</h3>
+        <p className="Quiz__title">{question}</p>
         {
           img &&
           <img src={process.env.PUBLIC_URL + img} alt={question} />
         }
-        <p>{question}</p>
         {
           this.state.submitted && this.state.hasSuccess &&
           <h4>That is correct!</h4>
@@ -83,16 +87,24 @@ class Quiz extends Component {
           this.state.submitted && !this.state.hasSuccess &&
           <h4>That is NOT correct!</h4>
         }
-        <ul className="options">
-          {this.renderOptions()}
-        </ul>
-        <button 
-          disabled={!this.state.canSubmit}
-          onClick={this.handleSubmit}
-        >
-          Submit
-        </button>
-        <button onClick={this.resetQuiz}>Try again!</button>
+        <div className="Quiz__options">
+          <ul>
+            {this.renderOptions()}
+          </ul>
+        </div>
+        <div>
+          <button
+            className="Quiz__submit"
+            disabled={!this.state.canSubmit}
+            onClick={this.handleSubmit}
+          >
+            Submit
+          </button>
+        </div>
+        {
+          this.state.submitted &&
+          <button onClick={this.resetQuiz}>Try again!</button>
+        }
       </div>
     );
   }
@@ -101,7 +113,6 @@ class Quiz extends Component {
 Quiz.propTypes = {
   block: PropTypes.shape({
     id: PropTypes.number,
-    title: PropTypes.string,
     type: PropTypes.string,
     img: PropTypes.string,
     question: PropTypes.string,
