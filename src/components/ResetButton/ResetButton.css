@@ -1,0 +1,16 @@
+button.try-again {
+  background-color: transparent;
+  border: none;
+  color: var(--dark-gray);
+  display: block;
+  font-family: var(--sans-font);
+  font-size: .80em;
+  letter-spacing: -.04rem;
+  margin: 0 auto;
+  margin-top: 40px;
+  text-transform: uppercase;
+}
+
+button.try-again:hover {
+  cursor: pointer;
+}

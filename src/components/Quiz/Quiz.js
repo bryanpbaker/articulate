@@ -4,6 +4,11 @@ import FontAwesome from 'react-fontawesome';
 
 import './Quiz.css';
 
+import QuizImage from '../QuizImage/QuizImage';
+import ResultMessage from '../ResultMessage/ResultMessage';
+import SubmitButton from '../SubmitButton/SubmitButton';
+import ResetButton from '../ResetButton/ResetButton';
+
 class Quiz extends Component {
   constructor(props) {
     super(props);
@@ -105,7 +110,7 @@ class Quiz extends Component {
         <p className="Quiz__title">{question}</p>
         {
           img &&
-          <img src={process.env.PUBLIC_URL + img} alt={question} />
+          <QuizImage img={img} question={question} />
         }
         <div className="Quiz__options">
           <ul>
@@ -115,58 +120,25 @@ class Quiz extends Component {
         <div className="results">
           {
             this.state.submitted && this.state.hasSuccess &&
-            <div className="Quiz__success-message">
-              <div className="icon-container">
-                <FontAwesome
-                  name="check"
-                  style={{
-                    fontSize: '32px',
-                    color: '#707070',
-                  }}
-                />
-              </div>
-              <p>Correct</p>
-              <p className="caption">{caption}</p>
-            </div>
+            <ResultMessage success caption={caption} />
           }
           {
             this.state.submitted && !this.state.hasSuccess &&
-            <div className="Quiz__success-message">
-              <div className="icon-container">
-                <FontAwesome
-                  name="close"
-                  style={{
-                    fontSize: '32px',
-                    color: '#707070',
-                  }}
-                />
-              </div>
-              <p>Incorrect</p>
-              <p className="caption">{caption}</p>
-            </div>
+            <ResultMessage success={false} caption={caption} />
           }
         </div>
         <div>
           {
             !this.state.submitted &&
-            <button
-              className="Quiz__submit"
-              disabled={!this.state.canSubmit}
-              onClick={this.handleSubmit}
-            >
-              Submit
-            </button>
+            <SubmitButton
+              canSubmit={this.state.canSubmit}
+              handleSubmit={this.handleSubmit}
+            />
           }
         </div>
         {
           this.state.submitted &&
-          <button className="try-again" onClick={this.resetQuiz}>
-            <FontAwesome
-              name="undo"
-            />
-            &nbsp;
-            Try again
-          </button>
+          <ResetButton resetQuiz={this.resetQuiz} />
         }
       </div>
     );

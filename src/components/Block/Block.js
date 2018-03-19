@@ -23,21 +23,23 @@ const Block = ({ block }) => {
 };
 
 Block.propTypes = {
-  block: PropTypes.shape({
-    id: PropTypes.number,
-    title: PropTypes.string,
-    type: PropTypes.string,
-    img: PropTypes.string,
-    question: PropTypes.string,
-    options: PropTypes.arrayOf(PropTypes.shape({
-      isCorrect: PropTypes.bool,
-      label: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.string,
-      ]),
+  block: PropTypes.oneOfType([
+    PropTypes.shape({
       id: PropTypes.number,
-    })),
-  }).isRequired,
+      title: PropTypes.string,
+      type: PropTypes.string,
+      img: PropTypes.string,
+      question: PropTypes.string,
+      options: PropTypes.arrayOf(PropTypes.shape({
+        isCorrect: PropTypes.bool,
+        label: PropTypes.oneOfType([
+          PropTypes.number,
+          PropTypes.string,
+        ]),
+        id: PropTypes.number,
+      })),
+    }),
+  ]).isRequired,
 };
 
 export default Block;

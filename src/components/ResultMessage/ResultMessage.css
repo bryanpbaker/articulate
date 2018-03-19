@@ -1,0 +1,23 @@
+.Quiz__result-message {
+  color: var(--dark-gray);
+  font-family: var(--serif-font);
+  text-align: center;
+}
+
+.Quiz__result-message .icon-container {
+  border: 1px solid var(--med-gray);
+  border-radius: 50%;
+  height: 50px;
+  margin: 0 auto;
+  position: relative;
+  width: 50px;
+}
+
+.Quiz__result-message .icon-container .fa {
+  color: var(--med-gray) !important;
+  font-size: 32px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -1,0 +1,27 @@
+.Quiz__submit {
+  background-color: var(--dark-gray);
+  border-radius: 2rem;
+  color: white;
+  display: block;
+  font-family: var(--sans-font);
+  font-size: .75em;
+  font-weight: bold;
+  height: 3.5em;
+  letter-spacing: .04em;
+  margin: 0 auto;
+  max-width: 11rem;
+  text-transform: uppercase;
+  transition: all .2s;
+  width: 100%;
+}
+
+.Quiz__submit:disabled {
+  background-color: silver;
+  transition: background-color .2s;
+}
+
+.Quiz__submit:not(:disabled):hover {
+  cursor: pointer;
+  opacity: .8;
+  transition: opacity .2;
+}
