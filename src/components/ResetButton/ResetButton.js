@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
 
 import './ResetButton.css';
@@ -9,8 +10,13 @@ const ResetButton = props => (
       name="undo"
     />
     &nbsp;
-    Try again
+    {props.label}
   </button>
 );
+
+ResetButton.propTypes = {
+  resetQuiz: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+};
 
 export default ResetButton;

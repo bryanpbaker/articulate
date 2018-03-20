@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import FontAwesome from 'react-fontawesome';
 
 import './Quiz.css';
 
 import QuizImage from '../QuizImage/QuizImage';
+import QuizOption from '../QuizOption/QuizOption';
 import ResultMessage from '../ResultMessage/ResultMessage';
 import SubmitButton from '../SubmitButton/SubmitButton';
 import ResetButton from '../ResetButton/ResetButton';
@@ -17,7 +17,6 @@ class Quiz extends Component {
       selectedAnswer: null,
       canSubmit: false,
       submitted: false,
-      hasSuccess: false,
     };
 
     this.state = this.initialState;
@@ -26,8 +25,16 @@ class Quiz extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetQuiz = this.resetQuiz.bind(this);
     this.renderOptions = this.renderOptions.bind(this);
+    this.answerIsSelected = this.answerIsSelected.bind(this);
+    this.answerCanBeSubmitted = this.answerCanBeSubmitted.bind(this);
+    this.answerIsSubmitted = this.answerIsSubmitted.bind(this);
+    this.answerIsCorrect = this.answerIsCorrect.bind(this);
   }
 
+  /**
+   * set the selectedAnswer state and allow submission
+   * @param {Object} option
+   */
   setAnswer(option) {
     this.setState({
       selectedAnswer: option,
@@ -35,16 +42,50 @@ class Quiz extends Component {
     });
   }
 
+  /**
+   * disable submission and set canSubmit to true
+   */
   handleSubmit() {
     this.setState({
       canSubmit: false,
       submitted: true,
-      hasSuccess: this.state.selectedAnswer.isCorrect,
     });
   }
 
+  /**
+   * reset initial state
+   */
   resetQuiz() {
     this.setState(this.initialState);
+  }
+
+  /**
+   * return true if the passed in option is the selectedAnswer
+   * @param {Object} option
+   */
+  answerIsSelected(option) {
+    return this.state.selectedAnswer === option;
+  }
+
+  /**
+   * return true if the answer can be submitted
+   */
+  answerCanBeSubmitted() {
+    return this.state.canSubmit;
+  }
+
+  /**
+   * return true if the answer has been submitted
+   */
+  answerIsSubmitted() {
+    return this.state.submitted;
+  }
+
+  /**
+   * return true if the answer is correct
+   */
+  answerIsCorrect() {
+    return this.state.selectedAnswer.isCorrect;
   }
 
   /**
@@ -52,55 +93,20 @@ class Quiz extends Component {
    */
   renderOptions() {
     return this.props.block.options.map(option => (
-      <li
+      <QuizOption
         key={option.key}
-        className={`Quiz__option ${this.state.selectedAnswer === option ? 'selected' : ''} ${this.state.submitted ? 'submitted' : ''} ${this.state.submitted && option.isCorrect ? 'correct' : 'incorrect'}`}
-      >
-        <input
-          type="radio"
-          id={`option${option.key}`}
-          name={`quiz-${this.props.block.id}-option`}
-          checked={this.state.selectedAnswer === option}
-          disabled={this.state.submitted}
-          onClick={() => this.setAnswer(option)}
-        />
-        <label htmlFor={`option${option.key}`}>
-          <span className="custom-radio">
-            {
-              !this.state.submitted &&
-              <span className="custom-radio-inner" />
-            }
-            {
-              this.state.submitted && this.state.hasSuccess && this.state.selectedAnswer === option &&
-              <FontAwesome
-                className="status-icon"
-                name="check"
-                style={{
-                  fontSize: '12px',
-                  color: '#707070',
-                }}
-              />
-            }
-            {
-              this.state.submitted && !this.state.hasSuccess && this.state.selectedAnswer === option &&
-              <FontAwesome
-                className="status-icon"
-                name="close"
-                style={{
-                  fontSize: '12px',
-                  color: '#707070',
-                }}
-              />
-            }
-          </span>
-          <span>{option.label}</span>
-        </label>
-        <div className="underline" />
-      </li>
+        option={option}
+        blockId={this.props.block.id}
+        setAnswer={this.setAnswer}
+        answerIsSelected={() => this.answerIsSelected(option)}
+        answerIsSubmitted={this.answerIsSubmitted}
+        answerIsCorrect={this.answerIsCorrect}
+      />
     ));
   }
 
   render() {
+    // destructure props
     const {
       question, img, caption,
     } = this.props.block;
@@ -109,8 +115,9 @@ class Quiz extends Component {
       <div className="Quiz">
         <p className="Quiz__title">{question}</p>
         {
+          // if there's an image for the block, render a QuizImage
           img &&
-          <QuizImage img={img} question={question} />
+          <QuizImage img={img} alt={question} />
         }
         <div className="Quiz__options">
           <ul>
@@ -119,31 +126,35 @@ class Quiz extends Component {
         </div>
         <div className="results">
           {
-            this.state.submitted && this.state.hasSuccess &&
-            <ResultMessage success caption={caption} />
+            // when the user answers correctly, show success
+            this.answerIsSubmitted() && this.answerIsCorrect() &&
+            <ResultMessage key="1" success caption={caption} />
           }
           {
-            this.state.submitted && !this.state.hasSuccess &&
-            <ResultMessage success={false} caption={caption} />
+            // when the user answers incorrectly, show fail
+            this.answerIsSubmitted() && !this.answerIsCorrect() &&
+            <ResultMessage key="2" success={false} caption={caption} />
           }
         </div>
         <div>
           {
-            !this.state.submitted &&
+            // hide the submit button once the answer has been submitted
+            !this.answerIsSubmitted() &&
             <SubmitButton
-              canSubmit={this.state.canSubmit}
+              canSubmit={this.answerCanBeSubmitted()}
               handleSubmit={this.handleSubmit}
             />
           }
         </div>
         {
-          this.state.submitted &&
-          <ResetButton resetQuiz={this.resetQuiz} />
+          // only show the reset button if the answer has been submitted
+          this.answerIsSubmitted() &&
+          <ResetButton resetQuiz={this.resetQuiz} label="Try Again" />
         }
       </div>
     );
   }
-};
+}
 
 Quiz.propTypes = {
   block: PropTypes.shape({

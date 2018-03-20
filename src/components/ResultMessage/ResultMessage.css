@@ -21,3 +21,14 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
+
+.result-message-appear {
+  opacity: 0;
+  max-height: 0;
+}
+
+.result-message-appear.result-message-appear-active {
+  opacity: 1;
+  max-height: 500px;
+  transition: opacity 1s ease-in, max-height .75s ease-out;
+}

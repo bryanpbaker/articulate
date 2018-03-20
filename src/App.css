@@ -5,6 +5,8 @@
   --light-gray-alt: #eaeaeb;
   --med-gray: #cacbcb;
   --dark-gray: #707070;
+  --success: #27ae60;
+  --failure: #e74c3c;
 }
 
 ul {
