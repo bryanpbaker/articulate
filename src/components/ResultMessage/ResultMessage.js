@@ -19,7 +19,7 @@ const ResultMessage = props => (
           name={props.success ? 'check' : 'close'}
         />
       </div>
-      <p>{props.success ? 'Correct' : 'Incorrect'}</p>
+      <p className="result">{props.success ? 'Correct' : 'Incorrect'}</p>
       <p className="caption">{props.caption}</p>
     </div>
   </CSSTransitionGroup>
